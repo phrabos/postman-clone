@@ -1,25 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styles from './postman.css';
 
 function JsonDisplay({ display }) {
   return (
-    <pre
-      style={{
-        width: '800px',
-        height: '800px',
-        border: '1px solid grey',
-        whiteSpace: 'pre-wrap',
-        overflowY: 'scroll',
-      }}
-    >
-
+    <pre>
       <code>
-        <p>
+        <p className={styles.resultDiv}>
           {display}
         </p>
       </code>
-
-
     </pre>
   );
 }

@@ -1,0 +1,41 @@
+::-webkit-scrollbar {
+  display: none;
+}
+
+.resultDiv {
+  width: 800px;
+  height: 600px;
+  border: 1px solid lightgrey;
+  border-radius: 4px;
+  white-space: pre-wrap;
+  overflow: scroll;
+}
+
+li {
+  list-style: none;
+  margin: 5px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.methodName {
+  border: 1px solid salmon;
+  border-radius: 4px;
+  background-color: lightgray;
+  margin: 5px;
+  pointer-events: none;
+}
+
+.methodClick {
+  cursor: pointer;
+  pointer-events: none;
+}
+
+.history {
+  display: inline;
+}
+
+.displayOuter {
+  display: flex;
+  flex-direction: row;
+}

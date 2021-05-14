@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import Controls from '../components/postman/Controls';
 import JsonDisplay from '../components/postman/JsonDisplay';
+import History from '../components/postman/History';
 import { getJson } from '../services/apiUtils';
+import style from '../components/postman/postman.css';
 
 export default class PostmanContainer extends Component {
   state={
@@ -9,17 +11,18 @@ export default class PostmanContainer extends Component {
     body: '',
     method: 'GET',
     display: '',
-    history: {
-      url: '',
-      body: '',
-      method: '',
-    },
+    history: []
   }
   onSubmit = async (e) => {
     e.preventDefault();
     const { url, body, method } = this.state;
+    if(!url.startsWith('http') && !url.startsWith('www')) return alert('enter valid URL');
     const display = await getJson(url, body, method);
-    this.setState({ display, url:'' });
+    this.setState(prevState => ({
+      display,
+      url: '',
+      history: [...prevState.history, { url, body, method }]
+    }));
   }
   onUrlQueryChange = (e) => {
     this.setState({ url: e.target.value });
@@ -30,9 +33,18 @@ export default class PostmanContainer extends Component {
   onRadioChange = (e) => {
     this.setState({ method: e.target.value });
   }
+  onLiClick = (e) => {
+    alert(e.target.value);
+    const idx = e.target.value;
+    this.setState({ 
+      url: this.state.history[idx].url,
+      method: this.state.history[idx].method,
+      body: this.state.history[idx].body,
+      display: '',
+    });
+  }
   render() {
-    console.log(this.state);
-    const { url, body, display, method } = this.state;
+    const { url, body, display, method, history } = this.state;
     return (
       <>
         <h1>Fake Postman</h1>
@@ -45,9 +57,17 @@ export default class PostmanContainer extends Component {
           onJsonChange={this.onJsonChange}
           onRadioChange={this.onRadioChange}
         />
-        <JsonDisplay 
-          display={display}
-        />
+        <div className={style.displayOuter}>
+          <JsonDisplay 
+            display={display}
+          />
+
+          <History 
+            history={history}
+            onLiClick={this.onLiClick}
+          />
+        </div>
+
       </>
     );
   }

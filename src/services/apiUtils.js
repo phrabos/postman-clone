@@ -1,5 +1,5 @@
 export async function getJson(url, body, method){
-  if(!body){
+  if(method  === 'GET' || method === 'DELETE'){
     const res = await fetch(url, {
       method,
       headers:{
@@ -7,7 +7,9 @@ export async function getJson(url, body, method){
       }
   
     });
+    
     const json = await res.json();
+    
     return JSON.stringify(json, null, 2);
   } else {
     const res = await fetch(url, {

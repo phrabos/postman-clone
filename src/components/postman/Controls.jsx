@@ -1,24 +1,44 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Radio from '@material-ui/core/Radio';
-import { FormControlLabel, RadioGroup } from '@material-ui/core';
+import { FormControlLabel, RadioGroup, TextField, Button } from '@material-ui/core';
+import SendIcon from '@material-ui/icons/Send';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  button: {
+    margin: theme.spacing(1),
+    color: theme.palette.warning.light,
+    background: theme.palette.info.main
+  },
+}));
 
 function Controls({ url, body, method, onUrlQueryChange, onJsonChange, onSubmit, onRadioChange }) {
+  const classes = useStyles();
   return (
     <>
-      <form onSubmit={onSubmit}>
+      <form noValidate autoComplete="off" onSubmit={onSubmit}>
         <label htmlFor="api-calls"></label>
-        <input 
+        <TextField required
           id="url-query"
           type="text"
           value={url}
           onChange={onUrlQueryChange}
-          placeholder="URL"
+          label="URL"
+          variant="outlined"
           style={{
-            width: '700px'
+            width: '800px'
           }}
         />
-        <button>Send Request</button>
+        <Button
+          type="submit"
+          variant="contained"
+          // color={theme.palette}
+          className={classes.button}
+          endIcon={<SendIcon />}
+        >
+        Send Request
+        </Button>
         <br />
         <RadioGroup row value={method} onChange={onRadioChange}>
           <FormControlLabel value="GET" control={<Radio />} label="GET" />
@@ -27,18 +47,21 @@ function Controls({ url, body, method, onUrlQueryChange, onJsonChange, onSubmit,
           <FormControlLabel value="DELETE" control={<Radio />} label="DELETE" />
         </RadioGroup>
         <br />
+        <TextField multiline
+          id="json-body" 
+          type="text"
+          value={body}
+          onChange={onJsonChange}
+          label="Request Body Formatted as JSON..."
+          variant="outlined"
+          style={{
+            width: '800px'
+          }}
+        />
       </form>
-      <input 
-        id="json-body"
-        type="text"
-        value={body}
-        onChange={onJsonChange}
-        placeholder="Request Body as JSON..."
-        style={{
-          height: '100px',
-          width: '800px'
-        }}
-      />
+      <form noValidate autoComplete="off">
+
+      </form>
     </>
   );
 }
