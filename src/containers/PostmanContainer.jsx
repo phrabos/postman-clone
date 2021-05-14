@@ -9,7 +9,11 @@ export default class PostmanContainer extends Component {
     body: '',
     method: 'GET',
     display: '',
-    history: [],
+    history: {
+      url: '',
+      body: '',
+      method: '',
+    },
   }
   onSubmit = async (e) => {
     e.preventDefault();
@@ -23,17 +27,23 @@ export default class PostmanContainer extends Component {
   onJsonChange = (e) => {
     this.setState({ body: e.target.value });
   }
+  onRadioChange = (e) => {
+    this.setState({ method: e.target.value });
+  }
   render() {
-    const { url, body, display } = this.state;
+    console.log(this.state);
+    const { url, body, display, method } = this.state;
     return (
       <>
         <h1>Fake Postman</h1>
         <Controls 
           url={url}
           body={body}
+          method={method}
           onSubmit={this.onSubmit}
           onUrlQueryChange={this.onUrlQueryChange}
           onJsonChange={this.onJsonChange}
+          onRadioChange={this.onRadioChange}
         />
         <JsonDisplay 
           display={display}
