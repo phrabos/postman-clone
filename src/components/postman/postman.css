@@ -15,7 +15,6 @@ li {
   list-style: none;
   margin: 5px;
   cursor: pointer;
-  width: 100%;
 }
 
 .methodName {
@@ -31,11 +30,20 @@ li {
   pointer-events: none;
 }
 
+.deleteButton {
+  z-index: 8;
+}
+
 .history {
   display: inline;
 }
 
 .displayOuter {
+  display: flex;
+  flex-direction: row;
+}
+
+.historyWrapper {
   display: flex;
   flex-direction: row;
 }

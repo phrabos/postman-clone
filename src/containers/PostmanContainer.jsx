@@ -13,6 +13,12 @@ export default class PostmanContainer extends Component {
     display: '',
     history: []
   }
+
+  componentDidMount() {
+    const lsHistory = JSON.parse(localStorage.getItem('HISTORY'));
+    this.setState({ history: lsHistory });
+  }
+
   onSubmit = async (e) => {
     e.preventDefault();
     const { url, body, method } = this.state;
@@ -23,6 +29,8 @@ export default class PostmanContainer extends Component {
       url: '',
       history: [...prevState.history, { url, body, method }]
     }));
+    const stringData = JSON.stringify(this.state.history);
+    localStorage.setItem('HISTORY', stringData);
   }
   onUrlQueryChange = (e) => {
     this.setState({ url: e.target.value });
@@ -34,7 +42,6 @@ export default class PostmanContainer extends Component {
     this.setState({ method: e.target.value });
   }
   onLiClick = (e) => {
-    alert(e.target.value);
     const idx = e.target.value;
     this.setState({ 
       url: this.state.history[idx].url,
@@ -42,6 +49,16 @@ export default class PostmanContainer extends Component {
       body: this.state.history[idx].body,
       display: '',
     });
+  }
+  onDeleteClick = (e) => {
+    const idx = +e.target.value;
+    alert(idx);
+    this.setState(prevState => ({
+      history: prevState.history.filter((_, i) => {
+        if(i !== idx) return true;
+        return false;
+      })
+    }));
   }
   render() {
     const { url, body, display, method, history } = this.state;
@@ -65,6 +82,7 @@ export default class PostmanContainer extends Component {
           <History 
             history={history}
             onLiClick={this.onLiClick}
+            onDeleteClick={this.onDeleteClick}
           />
         </div>
 
