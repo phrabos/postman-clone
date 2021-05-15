@@ -19,11 +19,6 @@ export default class PostmanContainer extends Component {
     this.setState({ history: lsHistory });
   }
 
-  componentDidUpdate() {
-    const stringData = JSON.stringify(this.state.history);
-    localStorage.setItem('HISTORY', stringData);
-  }
-
   onSubmit = async (e) => {
     e.preventDefault();
     const { url, body, method } = this.state;
@@ -58,13 +53,15 @@ export default class PostmanContainer extends Component {
   }
   onDeleteClick = (e) => {
     const idx = +e.target.value;
-    alert(idx);
     this.setState(prevState => ({
       history: prevState.history.filter((_, i) => {
         if(i !== idx) return true;
         return false;
       })
-    }));
+    }), () => {
+      const stringData = JSON.stringify(this.state.history);
+      localStorage.setItem('HISTORY', stringData);
+    });
   }
   render() {
     const { url, body, display, method, history } = this.state;
