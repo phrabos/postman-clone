@@ -11,23 +11,25 @@ export default class PostmanContainer extends Component {
     body: '',
     method: 'GET',
     display: '',
-//     history: [{url: 'test.com', body: '',  method: 'GET-TEST'}]
+    history: [{ url: 'test.com', body: '',  method: 'GET-TEST' }]
   }
 
-//   componentDidMount() {
-//     const lsHistory = JSON.parse(localStorage.getItem('HISTORY'));
-//     this.setState({ history: lsHistory });
-//   }
+  componentDidMount() {
+    const lsHistory = localStorage.getItem('HISTORY');
+    if(!lsHistory) localStorage.setItem('HISTORY', '[]');
+    const parsed = JSON.parse(lsHistory);
+    this.setState({ history: parsed });
+  }
 
   onSubmit = async (e) => {
     e.preventDefault();
     const { url, body, method } = this.state;
-//     if(!url.startsWith('http') && !url.startsWith('www')) return alert('enter valid URL');
+    if(!url.startsWith('http') && !url.startsWith('www')) return alert('enter valid URL');
     const display = await getJson(url, body, method);
     this.setState(prevState => ({
       display,
       url: '',
-//       history: [...prevState.history, { url, body, method }]
+      history: [...prevState.history, { url, body, method }]
     }));
     const stringData = JSON.stringify(this.state.history);
     localStorage.setItem('HISTORY', stringData);
@@ -64,6 +66,7 @@ export default class PostmanContainer extends Component {
     });
   }
   render() {
+    console.log(this.state.history)
     const { url, body, display, method, history } = this.state;
     return (
       <>
@@ -79,8 +82,12 @@ export default class PostmanContainer extends Component {
         />
         <div className={style.displayOuter}>
           <JsonDisplay display={display} />
+          <History 
+            history={history}
+            onLiClick={this.onLiClick}
+            onDeleteClick={this.onDeleteClick}
+          />
         </div>
-
       </>
     );
   }
