@@ -11,7 +11,7 @@ export default class PostmanContainer extends Component {
     body: '',
     method: 'GET',
     display: '',
-    history: [{url: 'test.com', method: 'GET-TEST'}]
+    history: [{url: 'test.com', body: '',  method: 'GET-TEST'}]
   }
 
   componentDidMount() {
