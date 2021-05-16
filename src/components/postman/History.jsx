@@ -13,6 +13,11 @@ const useStyles = makeStyles((theme) => ({
   extendedIcon: {
     marginRight: theme.spacing(1),
   },
+  button: {
+    margin: theme.spacing(1),
+    color: theme.palette.warning.light,
+    background: theme.palette.info.main
+  },
 }));
 
 function History({ history, onLiClick, onDeleteClick }) {
@@ -21,7 +26,7 @@ function History({ history, onLiClick, onDeleteClick }) {
     <div className={styles.history}>
       <h3 style={{ margin: '0' }}>History</h3>
       <ul style={{ margin: '0' }}>
-        {history.map((item, i) => {
+        {!!history.length && history.map((item, i) => {
           return (
             <div key={`${item.url} + ${i}`} className={styles.historyWrapper}>
               <li
@@ -40,7 +45,14 @@ function History({ history, onLiClick, onDeleteClick }) {
               >
                 <DeleteIcon />
               </IconButton>
-
+              {/* <Button
+                onClick={onDeleteClick}
+                variant="contained"
+                // color={theme.palette}
+                className={classes.button}
+                endIcon={<DeleteIcon />}
+              >
+              </Button> */}
             </div>
           );
         })}

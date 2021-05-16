@@ -66,7 +66,7 @@ export default class PostmanContainer extends Component {
     });
   }
   render() {
-    console.log(this.state.history)
+    console.log(this.state.history);
     const { url, body, display, method, history } = this.state;
     return (
       <>
