@@ -78,15 +78,7 @@ export default class PostmanContainer extends Component {
           onRadioChange={this.onRadioChange}
         />
         <div className={style.displayOuter}>
-          <JsonDisplay 
-            display={display}
-          />
-
-//           <History 
-//             history={history}
-//             onLiClick={this.onLiClick}
-//             onDeleteClick={this.onDeleteClick}
-//           />
+          <JsonDisplay display={display} />
         </div>
 
       </>
