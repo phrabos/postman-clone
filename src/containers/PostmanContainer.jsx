@@ -22,7 +22,7 @@ export default class PostmanContainer extends Component {
   onSubmit = async (e) => {
     e.preventDefault();
     const { url, body, method } = this.state;
-    if(!url.startsWith('http') && !url.startsWith('www')) return alert('enter valid URL');
+//     if(!url.startsWith('http') && !url.startsWith('www')) return alert('enter valid URL');
     const display = await getJson(url, body, method);
     this.setState(prevState => ({
       display,
