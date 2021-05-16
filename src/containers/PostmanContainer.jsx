@@ -11,13 +11,13 @@ export default class PostmanContainer extends Component {
     body: '',
     method: 'GET',
     display: '',
-    history: [{url: 'test.com', body: '',  method: 'GET-TEST'}]
+//     history: [{url: 'test.com', body: '',  method: 'GET-TEST'}]
   }
 
-  componentDidMount() {
-    const lsHistory = JSON.parse(localStorage.getItem('HISTORY'));
-    this.setState({ history: lsHistory });
-  }
+//   componentDidMount() {
+//     const lsHistory = JSON.parse(localStorage.getItem('HISTORY'));
+//     this.setState({ history: lsHistory });
+//   }
 
   onSubmit = async (e) => {
     e.preventDefault();
@@ -27,7 +27,7 @@ export default class PostmanContainer extends Component {
     this.setState(prevState => ({
       display,
       url: '',
-      history: [...prevState.history, { url, body, method }]
+//       history: [...prevState.history, { url, body, method }]
     }));
     const stringData = JSON.stringify(this.state.history);
     localStorage.setItem('HISTORY', stringData);
