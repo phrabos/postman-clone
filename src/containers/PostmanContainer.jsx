@@ -82,11 +82,11 @@ export default class PostmanContainer extends Component {
             display={display}
           />
 
-          <History 
-            history={history}
-            onLiClick={this.onLiClick}
-            onDeleteClick={this.onDeleteClick}
-          />
+//           <History 
+//             history={history}
+//             onLiClick={this.onLiClick}
+//             onDeleteClick={this.onDeleteClick}
+//           />
         </div>
 
       </>
