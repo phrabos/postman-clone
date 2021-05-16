@@ -21,7 +21,7 @@ function History({ history, onLiClick, onDeleteClick }) {
     <div className={styles.history}>
       <h3 style={{ margin: '0' }}>History</h3>
       <ul style={{ margin: '0' }}>
-        {!!history.length && history.map((item, i) => {
+        {history.map((item, i) => {
           return (
             <div key={`${item.url} + ${i}`} className={styles.historyWrapper}>
               <li
