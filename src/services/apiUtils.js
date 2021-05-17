@@ -1,11 +1,11 @@
-export async function getJson(url, body, method, auth, key, value){
+export async function getJson(url, body, method, auth, authKey, authValue){
   if(method  === 'GET' || method === 'DELETE'){
     if(auth){
       const res = await fetch(url, {
         method,
         headers:{
           'Content-type': 'application/json; charset=UTF-8',
-          [key]: value,
+          [authKey]: authValue,
         }
       });
       

@@ -12,6 +12,8 @@ export default class PostmanContainer extends Component {
     method: 'GET',
     auth: false,
     authType: 'API KEY',
+    authKey: '',
+    authValue: '',
     key: '',
     value: '',
     display: '',
@@ -79,7 +81,26 @@ export default class PostmanContainer extends Component {
     this.setState({ token: e.target.value });
   }
   onAuthRadioChange = (e) => {
-    this.setState({ authType: e.target.value });
+    this.setState({ 
+      authType: e.target.value,
+    }, () => {
+      if(this.state.authType === 'API KEY'){
+        this.setState({ 
+          authKey: this.state.key,
+          authValue: this.state.value, 
+        });
+      } else if(this.state.authType === 'BEARER TOKEN') {
+        this.setState({ 
+          authKey: 'AUTHORIZATION',
+          authValue: `BEARER ${this.state.value}`
+        });
+      } else if(this.state.authType === 'BASIC AUTH') { 
+        this.setState({
+          authKey: 'AUTHORIZATION',
+          authValue: `${this.state.key}${this.state.value}`
+        });
+      } else console.log('some error state');
+    }); 
   }
   render() {
     const { url, body, display, method, history, auth, key, value, authType } = this.state;

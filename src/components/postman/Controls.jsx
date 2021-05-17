@@ -52,7 +52,7 @@ function Controls({ url, body, method, auth, header, token, authType, onUrlQuery
           label="Headers?"
           onChange={onSwitchChange}
           name="headers"
-          inputprops={{ 'aria-label': 'secondary checkbox' }}
+          inputprops={{ 'aria-label': 'primary checkbox' }}
         />
         <br />
         {auth && (
