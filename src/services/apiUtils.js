@@ -29,7 +29,7 @@ export async function getJson(url, body, method, auth, authKey, authValue){
         body,
         headers:{
           'Content-type': 'application/json; charset=UTF-8',
-          [key]: value,
+          [authKey]: authValue,
         }
       });
       const json = await res.json();

@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Controls({ url, body, method, auth, header, token, authType, onUrlQueryChange, onJsonChange, onSubmit, onRadioChange, onSwitchChange, onHeaderChange, onTokenChange, onAuthRadioChange }) {
+function Controls({ url, body, method, auth, headerKey, headerValue, authType, onUrlQueryChange, onJsonChange, onSubmit, onRadioChange, onSwitchChange, onHeaderValueChange, onHeaderKeyChange, onAuthRadioChange }) {
   const classes = useStyles();
   return (
     <>
@@ -65,8 +65,8 @@ function Controls({ url, body, method, auth, header, token, authType, onUrlQuery
             <TextField
               id="headers" 
               type="text"
-              value={header}
-              onChange={onHeaderChange}
+              value={headerKey}
+              onChange={onHeaderKeyChange}
               label="KEY"
               variant="outlined"
               style={{
@@ -76,8 +76,8 @@ function Controls({ url, body, method, auth, header, token, authType, onUrlQuery
             <TextField
               id="token" 
               type="text"
-              value={token}
-              onChange={onTokenChange}
+              value={headerValue}
+              onChange={onHeaderValueChange}
               label="VALUE"
               variant="outlined"
               style={{
@@ -109,16 +109,16 @@ Controls.propTypes = {
   method: PropTypes.string.isRequired,
   auth: PropTypes.bool.isRequired,
   authType: PropTypes.string.isRequired,
-  header: PropTypes.string.isRequired,
-  token: PropTypes.string.isRequired,
+  headerKey: PropTypes.string.isRequired,
+  headerValue: PropTypes.string.isRequired,
   onUrlQueryChange: PropTypes.func.isRequired,
   onJsonChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onRadioChange: PropTypes.func.isRequired,
   onAuthRadioChange: PropTypes.func.isRequired,
   onSwitchChange: PropTypes.func.isRequired,
-  onHeaderChange: PropTypes.func.isRequired,
-  onTokenChange: PropTypes.func.isRequired,
+  onHeaderValueChange: PropTypes.func.isRequired,
+  onHeaderKeyChange: PropTypes.func.isRequired,
 };
 
 export default Controls;

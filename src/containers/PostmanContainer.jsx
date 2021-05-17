@@ -14,8 +14,8 @@ export default class PostmanContainer extends Component {
     authType: 'API KEY',
     authKey: '',
     authValue: '',
-    key: '',
-    value: '',
+    headerKey: '',
+    headerValue: '',
     display: '',
     history: [{ url: 'test.com', body: '',  method: 'GET-TEST' }]
   }
@@ -29,9 +29,9 @@ export default class PostmanContainer extends Component {
 
   onSubmit = async (e) => {
     e.preventDefault();
-    const { url, body, method, auth, key, value } = this.state;
+    const { url, body, method, auth, authKey, authValue } = this.state;
     if(!url.startsWith('http') && !url.startsWith('www')) return alert('enter valid URL');
-    const display = await getJson(url, body, method, auth, key, value);
+    const display = await getJson(url, body, method, auth, authKey, authValue);
     this.setState(prevState => ({
       display,
       url: '',
@@ -74,36 +74,37 @@ export default class PostmanContainer extends Component {
   onSwitchChange = () => {
     this.setState({ auth: this.state.auth ? false : true });
   }
-  onHeaderChange = (e) => {
-    this.setState({ header: e.target.value });
+  onHeaderKeyChange = (e) => {
+    this.setState({ headerKey: e.target.value });
   }
-  onTokenChange = (e) => {
-    this.setState({ token: e.target.value });
+  onHeaderValueChange = (e) => {
+    this.setState({ headerValue: e.target.value });
   }
   onAuthRadioChange = (e) => {
     this.setState({ 
       authType: e.target.value,
-    }, () => {
-      if(this.state.authType === 'API KEY'){
-        this.setState({ 
-          authKey: this.state.key,
-          authValue: this.state.value, 
-        });
-      } else if(this.state.authType === 'BEARER TOKEN') {
-        this.setState({ 
-          authKey: 'AUTHORIZATION',
-          authValue: `BEARER ${this.state.value}`
-        });
-      } else if(this.state.authType === 'BASIC AUTH') { 
-        this.setState({
-          authKey: 'AUTHORIZATION',
-          authValue: `${this.state.key}${this.state.value}`
-        });
-      } else console.log('some error state');
-    }); 
+    });
+    if(this.state.authType === 'API KEY'){
+      this.setState({ 
+        authKey: this.state.headerKey,
+        authValue: this.state.headerValue, 
+      }, () => console.log(this.state.authKey, this.state.authValue));
+    } else if(this.state.authType === 'BEARER TOKEN') {
+      this.setState({ 
+        authKey: 'AUTHORIZATION',
+        authValue: `BEARER ${this.state.headerValue}`
+      }, () => console.log(this.state.authKey, this.state.authValue));
+    } else if(this.state.authType === 'BASIC AUTH') { 
+      this.setState({
+        authKey: 'AUTHORIZATION',
+        authValue: `${this.state.headerKey}${this.state.headerValue}`
+      }, () => console.log(this.state.authKey, this.state.authValue));
+    } else console.log('some error state');
+
   }
   render() {
-    const { url, body, display, method, history, auth, key, value, authType } = this.state;
+
+    const { url, body, display, method, history, auth, headerKey, headerValue, authType } = this.state;
     return (
       <>
         <h1>Fake Postman</h1>
@@ -112,15 +113,16 @@ export default class PostmanContainer extends Component {
           body={body}
           method={method}
           auth={auth}
-          header={key}
-          token={value}
+          headerKey={headerKey}
+          headerValue={headerValue}
           authType={authType}
           onSubmit={this.onSubmit}
           onUrlQueryChange={this.onUrlQueryChange}
           onJsonChange={this.onJsonChange}
           onRadioChange={this.onRadioChange}
           onSwitchChange={this.onSwitchChange}
-          onHeaderChange={this.onHeaderChange}
+          onHeaderValueChange={this.onHeaderValueChange}
+          onHeaderKeyChange={this.onHeaderKeyChange}
           onTokenChange={this.onTokenChange}
           onAuthRadioChange={this.onAuthRadioChange}
         />
