@@ -1,29 +1,51 @@
-export async function getJson(url, body, method){
+export async function getJson(url, body, method, auth, key, value){
   if(method  === 'GET' || method === 'DELETE'){
-    const res = await fetch(url, {
-      method,
-      headers:{
-        'Content-type': 'application/json; charset=UTF-8'
-      }
-  
-    });
-    
-    const json = await res.json();
-    
-    return JSON.stringify(json, null, 2);
-  } else {
-    const res = await fetch(url, {
-      method,
-      body,
-      headers:{
-        'Content-type': 'application/json; charset=UTF-8'
-      }
-  
-    });
-    const json = await res.json();
-    return JSON.stringify(json, null, 2);
-  }
+    if(auth){
+      const res = await fetch(url, {
+        method,
+        headers:{
+          'Content-type': 'application/json; charset=UTF-8',
+          [key]: value,
+        }
+      });
+      
+      const json = await res.json();
+      
+      return JSON.stringify(json, null, 2);
+    } else {
+      const res = await fetch(url, {
+        method,
+      });
+      
+      const json = await res.json();
+      
+      return JSON.stringify(json, null, 2);
+    }
 
+  } else {
+    if(auth){
+      const res = await fetch(url, {
+        method,
+        body,
+        headers:{
+          'Content-type': 'application/json; charset=UTF-8',
+          [key]: value,
+        }
+      });
+      const json = await res.json();
+      return JSON.stringify(json, null, 2);
+    } else {
+      const res = await fetch(url, {
+        method,
+        body,
+        headers:{
+          'Content-type': 'application/json; charset=UTF-8',
+        }
+      });
+      const json = await res.json();
+      return JSON.stringify(json, null, 2);
+    }
+  }
 }
 
 export async function postJson(url, body, method){

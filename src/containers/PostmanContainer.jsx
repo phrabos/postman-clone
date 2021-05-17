@@ -11,8 +11,9 @@ export default class PostmanContainer extends Component {
     body: '',
     method: 'GET',
     auth: false,
-    header: '',
-    token: '',
+    authType: 'API KEY',
+    key: '',
+    value: '',
     display: '',
     history: [{ url: 'test.com', body: '',  method: 'GET-TEST' }]
   }
@@ -26,9 +27,9 @@ export default class PostmanContainer extends Component {
 
   onSubmit = async (e) => {
     e.preventDefault();
-    const { url, body, method } = this.state;
+    const { url, body, method, auth, key, value } = this.state;
     if(!url.startsWith('http') && !url.startsWith('www')) return alert('enter valid URL');
-    const display = await getJson(url, body, method);
+    const display = await getJson(url, body, method, auth, key, value);
     this.setState(prevState => ({
       display,
       url: '',
@@ -77,8 +78,11 @@ export default class PostmanContainer extends Component {
   onTokenChange = (e) => {
     this.setState({ token: e.target.value });
   }
+  onAuthRadioChange = (e) => {
+    this.setState({ authType: e.target.value });
+  }
   render() {
-    const { url, body, display, method, history, auth, header, token } = this.state;
+    const { url, body, display, method, history, auth, key, value, authType } = this.state;
     return (
       <>
         <h1>Fake Postman</h1>
@@ -87,8 +91,9 @@ export default class PostmanContainer extends Component {
           body={body}
           method={method}
           auth={auth}
-          header={header}
-          token={token}
+          header={key}
+          token={value}
+          authType={authType}
           onSubmit={this.onSubmit}
           onUrlQueryChange={this.onUrlQueryChange}
           onJsonChange={this.onJsonChange}
@@ -96,6 +101,7 @@ export default class PostmanContainer extends Component {
           onSwitchChange={this.onSwitchChange}
           onHeaderChange={this.onHeaderChange}
           onTokenChange={this.onTokenChange}
+          onAuthRadioChange={this.onAuthRadioChange}
         />
         <div className={style.displayOuter}>
           <JsonDisplay display={display} />

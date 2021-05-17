@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Controls({ url, body, method, auth, header, token, onUrlQueryChange, onJsonChange, onSubmit, onRadioChange, onSwitchChange, onHeaderChange, onTokenChange }) {
+function Controls({ url, body, method, auth, header, token, authType, onUrlQueryChange, onJsonChange, onSubmit, onRadioChange, onSwitchChange, onHeaderChange, onTokenChange, onAuthRadioChange }) {
   const classes = useStyles();
   return (
     <>
@@ -57,13 +57,17 @@ function Controls({ url, body, method, auth, header, token, onUrlQueryChange, on
         <br />
         {auth && (
           <div>
-
+            <RadioGroup row value={authType} onChange={onAuthRadioChange}>
+              <FormControlLabel value="API KEY" control={<Radio />} label="API KEY" />
+              <FormControlLabel value="BASIC AUTH" control={<Radio />} label="BASIC AUTH" />
+              <FormControlLabel value="BEARER TOKEN" control={<Radio />} label="BEARER TOKEN" />
+            </RadioGroup>
             <TextField
               id="headers" 
               type="text"
               value={header}
               onChange={onHeaderChange}
-              label="Auth Headers"
+              label="KEY"
               variant="outlined"
               style={{
                 width: '400px'
@@ -74,7 +78,7 @@ function Controls({ url, body, method, auth, header, token, onUrlQueryChange, on
               type="text"
               value={token}
               onChange={onTokenChange}
-              label="Token"
+              label="VALUE"
               variant="outlined"
               style={{
                 width: '400px'
@@ -104,12 +108,14 @@ Controls.propTypes = {
   body: PropTypes.string.isRequired,
   method: PropTypes.string.isRequired,
   auth: PropTypes.bool.isRequired,
+  authType: PropTypes.string.isRequired,
   header: PropTypes.string.isRequired,
   token: PropTypes.string.isRequired,
   onUrlQueryChange: PropTypes.func.isRequired,
   onJsonChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onRadioChange: PropTypes.func.isRequired,
+  onAuthRadioChange: PropTypes.func.isRequired,
   onSwitchChange: PropTypes.func.isRequired,
   onHeaderChange: PropTypes.func.isRequired,
   onTokenChange: PropTypes.func.isRequired,
