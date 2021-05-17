@@ -10,6 +10,9 @@ export default class PostmanContainer extends Component {
     url: '',
     body: '',
     method: 'GET',
+    auth: false,
+    header: '',
+    token: '',
     display: '',
     history: [{ url: 'test.com', body: '',  method: 'GET-TEST' }]
   }
@@ -65,9 +68,17 @@ export default class PostmanContainer extends Component {
       localStorage.setItem('HISTORY', stringData);
     });
   }
+  onSwitchChange = () => {
+    this.setState({ auth: this.state.auth ? false : true });
+  }
+  onHeaderChange = (e) => {
+    this.setState({ header: e.target.value });
+  }
+  onTokenChange = (e) => {
+    this.setState({ token: e.target.value });
+  }
   render() {
-    console.log(this.state.history);
-    const { url, body, display, method, history } = this.state;
+    const { url, body, display, method, history, auth, header, token } = this.state;
     return (
       <>
         <h1>Fake Postman</h1>
@@ -75,10 +86,16 @@ export default class PostmanContainer extends Component {
           url={url}
           body={body}
           method={method}
+          auth={auth}
+          header={header}
+          token={token}
           onSubmit={this.onSubmit}
           onUrlQueryChange={this.onUrlQueryChange}
           onJsonChange={this.onJsonChange}
           onRadioChange={this.onRadioChange}
+          onSwitchChange={this.onSwitchChange}
+          onHeaderChange={this.onHeaderChange}
+          onTokenChange={this.onTokenChange}
         />
         <div className={style.displayOuter}>
           <JsonDisplay display={display} />
